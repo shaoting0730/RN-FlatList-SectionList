@@ -60,7 +60,7 @@ export default class RightSectionList extends Component {
             // console.log(sectionData) // 数据源
             // console.log(sectionData[e])
             // console.log(sectionData[e].data.length)
-// SectionList实现scrollToIndex需要修改VirtualizedSectionList和SectionList源码
+            // SectionList实现scrollToIndex需要修改VirtualizedSectionList和SectionList源码
             if(e > 0){
                 //计算出前面有几行
                 var count = 0
