@@ -20,7 +20,7 @@ export default class RightSectionList extends Component {
              sectionData:sectionData
          };
        }
-
+    //行
     renderItem = (item) => {
         return (
             <View style={{height:60,justifyContent:'center',marginLeft:15}}>
@@ -28,11 +28,11 @@ export default class RightSectionList extends Component {
             </View>
         )
     }
-
-    sectionComp = (item) => {
+    //头
+    sectionComp = (section) => {
         return (
             <View style={{height:30,backgroundColor:'#DEDEDE',justifyContent:'center',alignItems:'center'}}>
-                <Text>{item.section.title}</Text>
+                <Text>{section.section.title}</Text>
             </View>
         )
     }
@@ -41,10 +41,10 @@ export default class RightSectionList extends Component {
         return (
                 <SectionList
                     style={{width:width-80}}
-                    renderSectionHeader={(item)=>this.sectionComp(item)}
-                    renderItem={(item)=>this.renderItem(item)}
-                    ItemSeparatorComponent = {()=>{return(<View style={{height:1,backgroundColor:'black'}}/>)}}
-                    sections={this.state.sectionData}
+                    renderSectionHeader={(section)=>this.sectionComp(section)} //头
+                    renderItem={(item)=>this.renderItem(item)} //行
+                    ItemSeparatorComponent = {()=>{return(<View style={{height:1,backgroundColor:'black'}}/>)}}//分隔线
+                    sections={this.state.sectionData} //数据
                 />
         );
     }
