@@ -13,7 +13,9 @@ import {
     Dimensions,
     RefreshControl,
     FlatList,
-    ActivityIndicator
+    ActivityIndicator,
+    DeviceEventEmitter,
+    ScrollView
 } from 'react-native';
 var {width,height} = Dimensions.get('window');
 var dataAry = []
@@ -31,6 +33,7 @@ export default class LeftFlatList extends Component{
     render() {
         return (
             <FlatList
+                ref='FlatList'
                 style={{width:80}}
                 data = {this.state.dataAry} //数据源
                 renderItem = {(item) => this.renderRow(item)} //每一行render
@@ -54,12 +57,13 @@ export default class LeftFlatList extends Component{
             </TouchableOpacity>
         )
     }
-    //点击改行
+    //点击某行
     cellAction =(item)=>{
         this.setState({
             cell:item.index
         })
-
+        DeviceEventEmitter.emit('SelectedRow',item.index); //发监听
+        // this.refs.FlatList.scrollToIndex({animated: true, index: 2})
     }
 
 };
