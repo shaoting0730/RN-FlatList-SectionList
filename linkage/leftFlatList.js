@@ -59,11 +59,28 @@ export default class LeftFlatList extends Component{
     }
     //点击某行
     cellAction =(item)=>{
-        this.setState({
-            cell:item.index
-        })
-        DeviceEventEmitter.emit('SelectedRow',item.index); //发监听
-        // this.refs.FlatList.scrollToIndex({animated: true, index: 2})
+        // alert(item.index)
+        if(item.index < this.state.dataAry.length - 1){
+            this.setState({
+                cell:item.index
+            })
+            DeviceEventEmitter.emit('left',item.index); //发监听
+        }
+
+    }
+
+    componentWillUnmount(){
+        // 移除监听
+        this.listener.remove();
+    }
+
+    componentWillMount() {
+        this.listener = DeviceEventEmitter.addListener('right',(e)=>{
+            this.refs.FlatList.scrollToIndex({animated: true, index: e-1})
+            this.setState({
+                cell:e-1
+            })
+        });
     }
 
 };

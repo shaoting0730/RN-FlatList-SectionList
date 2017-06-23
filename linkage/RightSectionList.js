@@ -33,7 +33,7 @@ export default class RightSectionList extends Component {
     //头
     sectionComp = (section) => {
         return (
-            <View style={{height:60,backgroundColor:'#DEDEDE',justifyContent:'center',alignItems:'center'}}>
+            <View style={{height:30,backgroundColor:'#DEDEDE',justifyContent:'center',alignItems:'center'}}>
                 <Text >{section.section.title}</Text>
             </View>
         )
@@ -48,6 +48,7 @@ export default class RightSectionList extends Component {
                 renderItem={(item)=>this.renderItem(item)} //行
                 ItemSeparatorComponent = {()=>{return(<View style={{height:1,backgroundColor:'black'}}/>)}}//分隔线
                 sections={this.state.sectionData} //数据
+                onViewableItemsChanged = {(info)=>this.itemChange(info)}  //滑动时调用
             />
 
         );
@@ -55,7 +56,7 @@ export default class RightSectionList extends Component {
 
     componentDidMount() {
         //收到监听
-        this.listener = DeviceEventEmitter.addListener('SelectedRow',(e)=>{
+        this.listener = DeviceEventEmitter.addListener('left',(e)=>{
             // console.log(e + 1) // 左边点击了第几行
             // console.log(sectionData) // 数据源
             // console.log(sectionData[e])
@@ -80,4 +81,14 @@ export default class RightSectionList extends Component {
         // 移除监听
         this.listener.remove();
     }
+
+    itemChange = (info)=>{
+        let title = info.viewableItems[0].item.title
+        var reg = new RegExp("^[0-9]*$");
+        if (reg.test(title)) {
+            DeviceEventEmitter.emit('right',title); //发监听
+        }
+    }
+
+
 }
